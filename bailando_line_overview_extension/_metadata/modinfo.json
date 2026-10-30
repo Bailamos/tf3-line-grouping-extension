@@ -1,0 +1,27 @@
+
+{
+  "name": "Line Overview Extension",
+  "summary": "Organize transport lines into groups and monitor their combined performance and statistics.",
+  "description": "Enhance line management with custom line groups and aggregated statistics.\n\nFeatures:\n- Organize multiple transport lines into custom groups.\n- View combined statistics for all lines within a group.\n- Monitor the overall performance of related lines.\n- Simplify the management of complex transport networks.",
+  "localization": {
+    "en": {
+      "name": "Line Overview Extension",
+      "summary": "Organize transport lines into groups and monitor their combined performance and statistics.",
+      "description": "Enhance line management with custom line groups and aggregated statistics.\n\nFeatures:\n- Organize multiple transport lines into custom groups.\n- View combined statistics for all lines within a group.\n- Monitor the overall performance of related lines.\n- Simplify the management of complex transport networks."
+    },
+    "pl": {
+      "name": "Rozszerzenie Zarzadzania Liniami",
+      "summary": "Grupuj linie transportowe i monitoruj ich laczne statystyki oraz wydajnosc.",
+      "description": "Rozszerz zarzadzanie liniami transportowymi o wlasne grupy i zbiorcze statystyki.\n\nFunkcje:\n- Organizowanie wielu linii transportowych w grupy.\n- Wyswietlanie lacznych statystyk linii w grupie.\n- Monitorowanie wydajnosci powiazanych linii.\n- Latwiejsze zarzadzanie rozbudowanymi sieciami transportowymi."
+    }
+  },
+  "authors": [
+    {
+      "name": "Szymon Kaczorowski",
+      "role": "CREATOR"
+    }
+  ],
+  "tags": [
+    "Script Mod"
+  ]
+}
