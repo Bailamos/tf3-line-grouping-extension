@@ -11,7 +11,6 @@ function LineGroupRepository:new(): LineGroupRepository
 end
 
 function LineGroupRepository:addLineToGroup(lines: { Engine.Entity }, groupName: string): nil
-    debugPrint('debug', groupName)
     self.lineGroups[groupName] = lines
 end
 
