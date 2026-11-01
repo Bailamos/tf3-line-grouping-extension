@@ -1,0 +1,4 @@
+#!/bin/sh
+# Resolve the project from this script so Cerulean can load tlconfig.lua.
+cd "$(dirname "$0")/.." || exit 1
+exec ceru "$@"

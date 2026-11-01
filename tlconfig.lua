@@ -8,4 +8,9 @@ return {
 		-- "example_mod_1",
 	},
 	global_env_def = "all_def",
+	cerulean = {
+		indent_width = 2,
+		max_line_width = 120,
+		sort_requires = false,
+	},
 }

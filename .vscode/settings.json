@@ -1,4 +1,6 @@
 {
+    // This needs to be absolute path sadly
+    "cerulean.cliPath": "/home/bailando/projects/transport-fever-mods/.vscode/ceru-project",
     "[teal]": {
         "editor.defaultFormatter": "efredriksson.cerulean-teal",
         "editor.formatOnSave": true
