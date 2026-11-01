@@ -7,5 +7,5 @@ return {
 		-- list your mods here, if you provide your own d.tl definitions
 		-- "example_mod_1",
 	},
-	global_env_def = "all_def"
+	global_env_def = "all_def",
 }

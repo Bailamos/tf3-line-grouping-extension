@@ -1,5 +1,6 @@
 {
 	"recommendations": [
-		"pdesaulniers.vscode-teal"
+		"pdesaulniers.vscode-teal",
+		"efredriksson.cerulean-teal"
 	]
 }

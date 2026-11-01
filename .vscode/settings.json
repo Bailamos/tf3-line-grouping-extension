@@ -1,0 +1,6 @@
+{
+    "[teal]": {
+        "editor.defaultFormatter": "efredriksson.cerulean-teal",
+        "editor.formatOnSave": true
+    }
+}
