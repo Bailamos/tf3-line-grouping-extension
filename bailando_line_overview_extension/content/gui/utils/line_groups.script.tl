@@ -35,6 +35,12 @@ local function getRepository(state: GameScriptState<LineGroupRepository>): LineG
 end
 
 local script: GameScript<LineGroupRepository> = {
+  update = function(_userParams: table, state: GameScriptState<LineGroupRepository>, _dt: number): any
+    if not state:hasEventSubscriptions() then
+      state:subscribeToEvent("bailando.assignLineToGroup")
+      state:subscribeToEvent("bailando.clearAllGroups")
+    end
+  end,
   handleEvent = function(
     _userParams: table,
     state: GameScriptState<LineGroupRepository>,
@@ -43,11 +49,6 @@ local script: GameScript<LineGroupRepository> = {
     eventName: string,
     eventPayload: AddLineToGroupPayload
   ): any
-    if not state:hasEventSubscriptions() then
-      state:subscribeToEvent("bailando.assignLineToGroup")
-      state:subscribeToEvent("bailando.clearAllGroups")
-    end
-
     if eventDestinationId ~= "bailando.lineManagerExtension" then
       return
     end
