@@ -34,8 +34,19 @@ local function getRepository(state: GameScriptState<LineGroupRepository>): LineG
   return repository
 end
 
+local function ensureRepositoryIsInit(state: GameScriptState<LineGroupRepository>): LineGroupRepository
+  local repository = state:get()
+  if repository.lineGroups == nil then
+    repository = LineGroupRepository:new()
+
+    state:set(repository)
+  end
+end
+
 local script: GameScript<LineGroupRepository> = {
   update = function(_userParams: table, state: GameScriptState<LineGroupRepository>, _dt: number): any
+    ensureRepositoryIsInit(state)
+
     if not state:hasEventSubscriptions() then
       state:subscribeToEvent("bailando.assignLineToGroup")
       state:subscribeToEvent("bailando.clearAllGroups")
