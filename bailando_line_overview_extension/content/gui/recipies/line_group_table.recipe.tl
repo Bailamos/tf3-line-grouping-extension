@@ -8,7 +8,7 @@ local LineGroupCell = react.RegisterRecipe(
   function(params: Builtin.TableCellParam): TreeNodeId
     local rowKey = params.rowKey
     local group = lineGroupsUtil.getGroupById(rowKey)
-    debugPrint(group)
+
     return builtin.BoxLayout(
       {
         children = {
