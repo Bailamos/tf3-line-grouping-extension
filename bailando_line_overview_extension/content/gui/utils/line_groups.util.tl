@@ -42,4 +42,14 @@ local function getGroupById(searchedId: integer): string
   return ""
 end
 
-return {getGroups = getGroups, getGroupById = getGroupById}
+local function getGroupNameById(searchedId: integer): string
+  local lineGroups = getGroupById(searchedId)
+
+  if lineGroups == nil then
+    return nil
+  end
+
+  return "Group " .. searchedId .. " (" .. lineGroups .. ")"
+end
+
+return {getGroups = getGroups, getGroupById = getGroupById, getGroupNameById = getGroupNameById}
