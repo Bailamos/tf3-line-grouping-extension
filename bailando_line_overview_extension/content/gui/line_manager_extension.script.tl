@@ -23,7 +23,21 @@ local ManagerContentReplacement = react.RegisterRecipe(
               layout = builtin.BoxLayout(
                 {
                   orientation = builtin.type.Orientation.Vertical,
-                  children = {LineGroupTable(params), ClearLineGroupsButton()},
+                  children = {
+                    builtin.Component(
+                      {
+                        meta = {
+                          styleSheet = styleutil.makeStyle(
+                            {
+                              size = {0, 15},
+                            }
+                          ),
+                        },
+                      }
+                    ),
+                    LineGroupTable(params),
+                    ClearLineGroupsButton(),
+                  },
                 }
               ),
             }
