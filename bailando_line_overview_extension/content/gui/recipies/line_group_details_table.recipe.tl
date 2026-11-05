@@ -1,8 +1,5 @@
 local react = ug_require("::/gui/main/react.lua") as React
 local builtin = ug_require("::/gui/main/builtin.lua") as Builtin
-local engine_react_util = ug_require("::/gui/main/engine_react_util.tl") as EngineReactUtil
-local lineGroupDetailsUtil = ug_require("bailando_line_overview_extension::/gui/utils/line_groups.util.tl")
-  as LineGroupsUtil
 
 local ToggleSelectLineGroupDetails = react.RegisterRecipe(
   "ToggleSelectLineGroupDetails",
@@ -40,9 +37,16 @@ local ToggleSelectLineGroupDetails = react.RegisterRecipe(
   end
 )
 
+local record LineGroupRepository
+  selectedGroupIdState: ReactStateT<integer>
+end
+
 local LineGroupDetailsCell = react.RegisterRecipe(
   "LineGroupDetailsCell",
-  function(params: Builtin.TableCellParam): TreeNodeId
+  function(params: Builtin.TableCellParamT<LineGroupRepository>): TreeNodeId
+    -- local selectedGroupIdState = params.userParam.selectedGroupIdState
+
+    -- debugPrint("SELECTED GROUP FROM line group details cell: " .. selectedGroupIdState:old())
     return builtin.BoxLayout(
       {
         orientation = builtin.type.Orientation.Horizontal,
@@ -61,7 +65,7 @@ local LineGroupDetailsCell = react.RegisterRecipe(
 
 local LineGroupDetailsTable = react.RegisterRecipe(
   "LineGroupDetailsTable",
-  function(_params: ToolReactUtil.ToolWindowParamPayload<ManagerWindow.ManagerToolParam>): TreeNodeId
+  function(selectedGroupIdState: ReactStateT<integer>): TreeNodeId
     return builtin.BoxLayout(
       {
         orientation = builtin.type.Orientation.Vertical,
@@ -82,6 +86,7 @@ local LineGroupDetailsTable = react.RegisterRecipe(
               scrollPolicyVertical = builtin.type.ScrollBarPolicy.AsNeededButAlwaysReserveSpace,
               scrollPolicyHorizontal = builtin.type.ScrollBarPolicy.AlwaysOff,
               keyboardNavigation = false,
+              -- userParams = {selectedGroupIdState = selectedGroupIdState},
             }
           ),
         },

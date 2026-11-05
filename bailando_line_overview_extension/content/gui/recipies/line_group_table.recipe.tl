@@ -5,21 +5,22 @@ local lineGroupsUtil = ug_require("bailando_line_overview_extension::/gui/utils/
 
 local ToggleSelectGroup = react.RegisterRecipe(
   "ToggleSelectGroup",
-  function(): TreeNodeId
-    local isSelectedState = react.useState(0)
+  function(selectedGroupIdState: ReactStateT<integer>, groupId: integer): TreeNodeId
+    local selectedGroupIdMirror = react.useMirrorState(selectedGroupIdState)
+
     local lineCheckbox = builtin.CheckBox(
       {
         meta = {
           tooltip = "select",
         },
-        onValueChange = function(__val: integer)
-          if isSelectedState:old() == 0 then
-            isSelectedState:set(1)
+        onValueChange = function(value: integer)
+          if value == 1 then
+            selectedGroupIdState:set(groupId)
           else
-            isSelectedState:set(0)
+            selectedGroupIdState:set(-1)
           end
         end,
-        value = isSelectedState:old(),
+        value = selectedGroupIdMirror:old() == groupId and 1 or 0,
       }
     )
 
@@ -39,17 +40,22 @@ local ToggleSelectGroup = react.RegisterRecipe(
   end
 )
 
+local record LineGroupRepository
+  selectedGroupIdState: ReactStateT<integer>
+end
+
 local LineGroupCell = react.RegisterRecipe(
   "LineGroupCell",
-  function(params: Builtin.TableCellParam): TreeNodeId
+  function(params: Builtin.TableCellParamT<LineGroupRepository>): TreeNodeId
     local rowKey = params.rowKey
     local group = lineGroupsUtil.getGroupNameById(rowKey)
+    local userParams = params.userParam
 
     return builtin.BoxLayout(
       {
         orientation = builtin.type.Orientation.Horizontal,
         children = {
-          ToggleSelectGroup(),
+          ToggleSelectGroup(userParams.selectedGroupIdState, params.rowKey),
           builtin.TextView(
             {
               text = group,
@@ -63,7 +69,7 @@ local LineGroupCell = react.RegisterRecipe(
 
 local LineGroupsTable = react.RegisterRecipe(
   "LineGroupsTable",
-  function(_params: ToolReactUtil.ToolWindowParamPayload<ManagerWindow.ManagerToolParam>): TreeNodeId
+  function(selectedGroupIdState: ReactStateT<integer>): TreeNodeId
     local record TableState
       rowKeys: {integer}
     end
@@ -98,6 +104,7 @@ local LineGroupsTable = react.RegisterRecipe(
               scrollPolicyVertical = builtin.type.ScrollBarPolicy.AsNeededButAlwaysReserveSpace,
               scrollPolicyHorizontal = builtin.type.ScrollBarPolicy.AlwaysOff,
               keyboardNavigation = false,
+              userParam = {selectedGroupIdState = selectedGroupIdState},
             }
           ),
         },
