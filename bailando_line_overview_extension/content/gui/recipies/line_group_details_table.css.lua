@@ -1,0 +1,56 @@
+local ssu = require "::/gui/main/stylesheetutil.lua"
+local color_util = require "::/gui/main/color_util.tl"
+
+function data()
+    local result = {}
+    local a = ssu.makeAdder(result)
+
+    a("R::LineGroupDetailsTable Table::Header", {
+        visibility = "none",
+    })
+
+    -- Avoid column spacing caused by the hidden header.
+    a("R::LineGroupDetailsTable Table::Header TextView", {
+        margin = { 0, 0, 0, 0 },
+    })
+
+    a("R::LineGroupDetailsCell TextView", {
+        margin = { 0, 0, 0, 0 },
+        padding = { 0, 1, 0, 1 },
+    })
+
+    local colors = api.gui.genericRep.get(
+        api.gui.genericRep.find("::/gui/main/default_colors.gres")
+    ).data
+
+    a("R::LineGroupDetailsTable", {
+        backgroundImage1 = {
+            fileName = "::/gui/entity_window/design/card_surface.tga",
+            horizontal = { 0, 6, 26, 32 },
+            vertical = { 0, 6, 26, 32 },
+        },
+        borderImage = {
+            fileName = "::/gui/entity_window/design/card_contour.tga",
+            horizontal = { 0, 6, 26, 32 },
+            vertical = { 0, 6, 26, 32 },
+        },
+        backgroundColor1 = colors.BaseMedium,
+        borderColor = colors.BaseVeryLight,
+        padding = { 1, 1, 1, 1 },
+        size = { 400, 235 },
+        margin = { 50, 0, 0, 0 },
+    })
+
+    local transparency = api.gui.genericRep.get(
+        api.gui.genericRep.find("::/gui/main/transparency.gres")
+    ).data
+
+    a("R::LineGroupDetailsCell:hover", {
+        backgroundColor = color_util.withTransparencyRaw(
+            colors.NeutralLight,
+            transparency.VeryHigh
+        ),
+    })
+
+    return result
+end

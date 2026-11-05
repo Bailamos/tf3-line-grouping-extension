@@ -1,0 +1,93 @@
+local react = ug_require("::/gui/main/react.lua") as React
+local builtin = ug_require("::/gui/main/builtin.lua") as Builtin
+local engine_react_util = ug_require("::/gui/main/engine_react_util.tl") as EngineReactUtil
+local lineGroupDetailsUtil = ug_require("bailando_line_overview_extension::/gui/utils/line_groups.util.tl")
+  as LineGroupsUtil
+
+local ToggleSelectLineGroupDetails = react.RegisterRecipe(
+  "ToggleSelectLineGroupDetails",
+  function(): TreeNodeId
+    local isSelectedState = react.useState(0)
+    local lineCheckbox = builtin.CheckBox(
+      {
+        meta = {
+          tooltip = "select",
+        },
+        onValueChange = function(__val: integer)
+          if isSelectedState:old() == 0 then
+            isSelectedState:set(1)
+          else
+            isSelectedState:set(0)
+          end
+        end,
+        value = isSelectedState:old(),
+      }
+    )
+
+    return builtin.FloatingLayout(
+      {
+        children = {
+          builtin.FloatingLayoutChild(
+            {
+              h = -1,
+              v = -1,
+              item = lineCheckbox,
+            }
+          ),
+        },
+      }
+    )
+  end
+)
+
+local LineGroupDetailsCell = react.RegisterRecipe(
+  "LineGroupDetailsCell",
+  function(params: Builtin.TableCellParam): TreeNodeId
+    return builtin.BoxLayout(
+      {
+        orientation = builtin.type.Orientation.Horizontal,
+        children = {
+          ToggleSelectLineGroupDetails(),
+          builtin.TextView(
+            {
+              text = "test",
+            }
+          ),
+        },
+      }
+    )
+  end
+)
+
+local LineGroupDetailsTable = react.RegisterRecipe(
+  "LineGroupDetailsTable",
+  function(_params: ToolReactUtil.ToolWindowParamPayload<ManagerWindow.ManagerToolParam>): TreeNodeId
+    return builtin.BoxLayout(
+      {
+        orientation = builtin.type.Orientation.Vertical,
+        children = {
+          builtin.DataTable(
+            {
+              disableSortKey = true,
+              columns = {
+                builtin.ColumnDesc(
+                  {
+                    name = "Group",
+                    recipe = LineGroupDetailsCell,
+                    weight = 1.0,
+                  }
+                ),
+              },
+              rowKeys = {1, 2, 3},
+              scrollPolicyVertical = builtin.type.ScrollBarPolicy.AsNeededButAlwaysReserveSpace,
+              scrollPolicyHorizontal = builtin.type.ScrollBarPolicy.AlwaysOff,
+              keyboardNavigation = false,
+            }
+          ),
+        },
+      }
+    )
+  end
+)
+
+return LineGroupDetailsTable

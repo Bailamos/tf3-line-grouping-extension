@@ -1,4 +1,5 @@
 local ssu = require "::/gui/main/stylesheetutil.lua"
+local color_util = require "::/gui/main/color_util.tl"
 
 function data()
     local result = {}
@@ -37,6 +38,18 @@ function data()
         borderColor = colors.BaseVeryLight,
         padding = { 1, 1, 1, 1 },
         size = { 400, 235 },
+        margin = { 50, 0, 0, 0 },
+    })
+
+    local transparency = api.gui.genericRep.get(
+        api.gui.genericRep.find("::/gui/main/transparency.gres")
+    ).data
+
+    a("R::LineGroupCell:hover", {
+        backgroundColor = color_util.withTransparencyRaw(
+            colors.NeutralLight,
+            transparency.VeryHigh
+        ),
     })
 
     return result

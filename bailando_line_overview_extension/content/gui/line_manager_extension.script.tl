@@ -4,6 +4,8 @@ local manager_window = ug_require("::/gui/line_vehicle_mgmt/manager_window.tl") 
 local styleutil = ug_require("::/gui/main/styleutil.tl") as StyleUtil
 local LineGroupTable = ug_require("bailando_line_overview_extension::/gui/recipies/line_group_table.recipe.tl")
   as Recipe<ToolReactUtil.ToolWindowParamPayload<ManagerWindow.ManagerToolParam>>
+local LineGroupDetailsTable = ug_require("bailando_line_overview_extension::/gui/recipies/line_group_details_table.recipe.tl")
+  as Recipe<ToolReactUtil.ToolWindowParamPayload<ManagerWindow.ManagerToolParam>>
 local CreateLineGroupButton = ug_require(
   "bailando_line_overview_extension::/gui/recipies/create_line_group_button.recipe.tl"
 ) as Recipe<ToolReactUtil.ToolWindowParamPayload<ManagerWindow.ManagerToolParam>>
@@ -23,21 +25,7 @@ local ManagerContentReplacement = react.RegisterRecipe(
               layout = builtin.BoxLayout(
                 {
                   orientation = builtin.type.Orientation.Vertical,
-                  children = {
-                    builtin.Component(
-                      {
-                        meta = {
-                          styleSheet = styleutil.makeStyle(
-                            {
-                              size = {0, 15},
-                            }
-                          ),
-                        },
-                      }
-                    ),
-                    LineGroupTable(params),
-                    ClearLineGroupsButton(),
-                  },
+                  children = {LineGroupTable(params), LineGroupDetailsTable(params)},
                 }
               ),
             }
@@ -49,7 +37,15 @@ local ManagerContentReplacement = react.RegisterRecipe(
                   orientation = builtin.type.Orientation.Vertical,
                   children = {
                     react.CallOriginalRecipe(manager_window.ManagerWindowContent, params),
-                    CreateLineGroupButton(params),
+                    builtin.BoxLayout(
+                      {
+                        orientation = builtin.type.Orientation.Horizontal,
+                        children = {
+                          ClearLineGroupsButton(),
+                          CreateLineGroupButton(params),
+                        },
+                      }
+                    ),
                     builtin.Component(
                       {
                         meta = {
